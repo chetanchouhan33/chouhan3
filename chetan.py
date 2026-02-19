@@ -1,29 +1,25 @@
-import pandas as pd
-from sklearn.tree import DecisionTreeRegressor
+from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
 
-# Load data (using a sample dataset)
-melbourne_file_path = 'melb_data.csv'
-data = pd.read_csv(melbourne_file_path)
+# Load built-in dataset
+data = load_iris()
 
-# Drop missing values
-data = data.dropna(axis=0)
-
-# Select target and features
-y = data.Price
-features = ['Rooms', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude']
-X = data[features]
+X = data.data      # features
+y = data.target    # labels
 
 # Split data
-train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
 
-# Define Model
-model = DecisionTreeRegressor(random_state=1)
+# Create model
+model = DecisionTreeClassifier()
 
-# Fit Model
-model.fit(train_X, train_y)
+# Train model
+model.fit(X_train, y_train)
 
 # Predict
-predictions = model.predict(val_X)
-print(mean_absolute_error(val_y, predictions))
+predictions = model.predict(X_test)
+
+# Check accuracy
+print("Accuracy:", accuracy_score(y_test, predictions))
