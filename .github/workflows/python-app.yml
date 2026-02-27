@@ -26,4 +26,4 @@ jobs:
 
     - name: Run ML script
       run: |
-        python chetan.py
+        python akshit.py
